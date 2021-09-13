@@ -21,12 +21,14 @@ const pattern = {
 }
 let library = []
 
-function Book(name, author, pages, read, data ){
-    this.name = name
-    this.author = author
-    this.pages = pages
-    this.read = read
-    this.data = data
+class Book{
+    constructor(name, author, pages, read, data ){
+        this.name = name
+        this.author = author
+        this.pages = pages
+        this.read = read
+        this.data = data
+    }
 }
 //       //      //      //
 
