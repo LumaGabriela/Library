@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../Library/style.css">
+
+    <title>Library</title>
+</head>
+<body>
+    <header id="header">
+        <h2><a href="https://github.com/LumaGabriela/Projects/tree/main/Library" target="_blank" id="title">Library</a></h2>
+        <ul>
+            <li><a href="#" class="header-link" id="clear-all">Clear data</a></li>
+            <li><a href="#" class="header-link" id="show-menu"> Add Book</a></li>
+        </ul>
+    </header>
+    <div id="form-div">
+        <form id="form">
+            <h2>Book</h2>
+            <input type="text" class="inputs" id="name" name="name" placeholder="Book name"  required>
+            <p>The title must contain 0-50 characters</p>
+            <input type="text" class="inputs" id="author" name="author" placeholder="Book author" required>
+            <p>Author must contain 0-30 characters</p>
+            <input type="number" class="inputs" id="pages" name="pages" placeholder="Pages number" required>
+            <p>Must contain 0-6 numbers</p>
+            <input type="checkbox" id="read" name="read" >            
+            <label for="read" class="checkbox"></label>
+            <input type="submit" id='add-book' name='addBook' value="Add Book" >
+        </form>
+    </div>
+    <main class="main">        
+    </main>
+</body>
+<script src="../Library/main.js"></script>
+<script src="https://kit.fontawesome.com/407028fd30.js" crossorigin="anonymous"></script>
+
+  
+</html>

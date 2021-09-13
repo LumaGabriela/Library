@@ -1,0 +1,240 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300&display=swap');
+*, *::before, *::after{
+    box-sizing: border-box;
+}
+html{
+    margin: 0; padding: 0;
+}
+body{
+    height: 100%; width: 100%;
+    margin: 0; padding: 0;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Nunito', sans-serif;
+    color: #0b081a;
+    background: bisque;
+}
+.main{
+    height:100%; width:100%;
+    display: grid;
+    grid-template-rows: repeat(auto-fill,minmax(240px,1fr));
+    grid-template-columns: repeat(auto-fill,180px);
+    gap: 10px;
+    padding:0 10px;
+    justify-content: center;
+    align-items: center;
+    
+}
+#header{
+    display: flex;
+    justify-content:space-between;
+    align-items: center;
+    padding: 10px;
+    margin: 0 0 30px;
+    height: 60px;
+    background: #332924;
+}
+#header ul{
+    display: flex;
+    flex-direction: row;
+    justify-content: right;
+    list-style: none;
+    margin: 0; padding: 0;
+}
+
+#header ul a {
+    display: flex;
+    text-decoration: none;
+    font-size: 1.2rem;
+    padding: 0 10px;
+    color: bisque;
+    text-shadow: 2px 2px 2px #000000;
+    text-align: right;
+}
+#title {
+    background:linear-gradient(30deg, #eb6222, bisque) ;
+    background-clip: text;
+    color: transparent;
+    -webkit-background-clip: text;
+    font-size: 3rem;
+}
+
+#form-div{
+    visibility: hidden;
+    position: fixed;
+    z-index: 4;
+    display: flex ;
+    justify-content: center;
+    align-items:center;
+    height: 100%; width: 100%;
+    background: #1d1d1db2;
+    
+}
+#form{
+    display: flex;
+    flex-direction:column;
+    justify-content: center;
+    align-items:center;
+    width: 300px;
+    height: 420px;
+    background: #cca38f;
+    border-radius: 10px;
+    border: 3px solid #414141;
+}
+@keyframes bookmenu {
+    0%{transform: scaleY(.1) scaleX(.1);}
+    100%{transform: scaleY(1) scaleX(1);}
+}
+@keyframes closemenu {
+    0%{}
+    100%{transform:scaleY(0) scaleX(0);}
+    
+}
+@keyframes formDivClose {
+    0%{visibility: visible;opacity: 1;}
+    100%{visibility: hidden; opacity: 0;}
+}
+#form>p{
+    visibility: hidden;
+    margin: 10px 0;
+}
+#form>h2{
+    margin:0;
+    color: #332924;
+}
+.inputs{
+    border-radius: 10px;
+    width: calc(100% - 40px);
+    height: 40px;
+    background: #cecece;
+    border: none;
+    padding: 5px 10px;
+    box-shadow: 0 0 10px #1b1b1b;
+}
+.inputs.valid {
+    border: 3px solid #72ff95 ;
+    box-shadow:  0 0 10px #72ff95;
+}
+.inputs.invalid {
+    border: 3px solid #fc7e57 ;
+    box-shadow:  0 0 10px #fc7e57;
+}
+#form .inputs.invalid + p {
+    visibility: visible;
+    font-weight: 600;
+    font-size: .9rem;
+    text-shadow:  0 0 5px #fc7e57;
+    margin: 2px 0 20px;
+}
+input:focus, input:active {
+    outline: none;
+    border: 3px solid #332924;
+    box-shadow: 2px 2px 10px #332924;
+}
+#add-book{
+    width: 150px; height: 30px;
+    border-radius: 6px;
+    border: none;
+    color: #ffc7aa;
+    background: #332924;
+    font-size: 1.3rem;
+    cursor:pointer
+}
+/*      Checkboxes       */
+
+[type='checkbox'] {
+    height: 0; width: 0;
+    visibility: hidden;
+}
+.checkbox{
+    position: relative;
+    margin: 0 0 20px;
+    cursor: pointer;
+    width: 50px;
+    height: 27px;
+    border-radius: 15px;
+    display: flex;
+    box-shadow:  0 0 5px #000000;
+    transition: all 0.4s;
+    background: #6b6b6b;
+}
+
+.checkbox::before,#form .checkbox::after {
+    content: '';
+    position: absolute;
+}
+.checkbox::before{
+    display: flex;
+    left: 0px; top: 0px;
+    width: 27px; height: 27px;
+    background: #bdbdbd;
+    box-shadow: inset 0 0 2px #000000;
+    border-radius: 50%;
+    transition: transform 0.4s cubic-bezier(0, 0.26, 0.85, 1.44);
+    z-index: 1;
+    
+}
+.checkbox::after {
+    top: 50%; right: 8px;
+    width: 14px; height: 14px;
+    transform: translateY(-50%);
+}
+/*      Cards         */
+.cards{
+    display: grid;
+    grid-template-areas: 
+    'title title title'
+    'title title title'
+    'info info info'
+    'checkbox . removebtn' ;
+    grid-template-columns:repeat(3,1fr) ;
+    grid-template-rows: 1fr 1fr 1fr 30px;
+    padding: 5px; margin: 0px;
+    height: 240px; width: 180px;
+    background: #332924;
+    color: #ff966c;
+    border-radius: 8px;
+    box-shadow: 0 0 10px #000000;
+}
+.cards .book-title{
+    padding:10px 0 ;
+    margin: 0;
+    grid-area: title;
+    text-align: center;
+    word-wrap: break-word;
+}
+.cards p {
+    text-align: center;
+    grid-area: info;
+    margin: auto 0 0;
+}
+.cards > .checkbox{
+    margin: auto 0 0 ;
+    grid-area: checkbox;
+}
+.fa-times-circle  {
+    color: #ff8a5c;
+    cursor: pointer;
+    width: 100% !important; height: 100%;
+}
+.remove_btn{
+    height: 1.4rem; width: 1.4rem;
+    padding: 0;
+    background:transparent;
+    border: none;
+    display: flex;
+    margin: auto 0 3px auto;
+    grid-area: removebtn;
+}
+/*  /   /   /   /   /   /   / */
+[type='checkbox']:checked + .checkbox {
+    background: #ff8a5c !important;
+}
+[type='checkbox']:checked + .checkbox::before {
+    transform: translateX(24px) !important;
+}
+@media screen and (max-width:388px){
+    #header ul a{
+        font-size: .9rem;
+    };
+}
