@@ -195,6 +195,7 @@ input:focus, input:active {
     color: #ff966c;
     border-radius: 8px;
     box-shadow: 0 0 10px #000000;
+    word-wrap: break-word;
 }
 .cards .book-title{
     padding:10px 0 ;
@@ -234,6 +235,7 @@ input:focus, input:active {
     transform: translateX(24px) !important;
 }
 @media screen and (max-width:388px){
+    #header #title{font-size: 1.8rem;}
     #header ul a{
         font-size: .9rem;
     };
