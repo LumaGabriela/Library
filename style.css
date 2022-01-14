@@ -43,14 +43,50 @@ body{
 }
 
 #header ul a {
-    display: flex;
     text-decoration: none;
     font-size: 1.2rem;
-    padding: 0 10px;
     color: bisque;
     text-shadow: 2px 2px 2px #000000;
     text-align: right;
 }
+#header li {padding: 0 10px;display: flex; align-items: center;}
+.account-btn{
+    background: transparent;
+    border: none;
+    color: bisque;
+    background: #79330b;
+    min-height: 2rem;
+    font-size: 1.3rem;
+    border-radius: 5px;
+    cursor: pointer;
+}
+#user-profile{
+    display: flex; height: 100%;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+#userId {
+    margin: 0; 
+    background: #79330b; 
+    display: none;
+    position: absolute;
+    cursor: pointer; border-radius: 5px;
+    color: bisque;
+    padding: 0 1rem;
+    transform: translateY(3rem);
+}
+#profilePicture:hover + #userId, #userId:hover {display: flex;}
+#profilePicture{
+    width: 3rem; height: 3rem;
+    background-size: 100% !important;
+    border-radius: 100px;
+    cursor: pointer;
+}
+/* inactive buttons */
+.inactive{display: none !important;}
+/*      Checkboxes       */
+
 #title {
     background:linear-gradient(30deg, #eb6222, bisque) ;
     background-clip: text;
@@ -140,7 +176,6 @@ input:focus, input:active {
     font-size: 1.3rem;
     cursor:pointer
 }
-/*      Checkboxes       */
 
 [type='checkbox'] {
     height: 0; width: 0;

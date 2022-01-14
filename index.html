@@ -5,7 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./style.css">
-
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script defer src="./main.js"></script>
     <title>Library</title>
 </head>
 <body>
@@ -13,7 +16,12 @@
         <h2><a href="https://github.com/LumaGabriela/Library" target="_blank" id="title">Library</a></h2>
         <ul>
             <li><a href="#" class="header-link" id="clear-all">Clear data</a></li>
-            <li><a href="#" class="header-link" id="show-menu"> Add Book</a></li>
+            <li><a href="#" class="header-link" id="show-menu">Add Book</a></li>
+           <button type="button" class="account-btn" id="login">Log In</button>
+            <button type="button" class="account-btn inactive" id="logout">Log Out</button>
+            <section id="user-profile" class="inactive">        
+                <div id="profilePicture"></div><span id="userId" ></span>
+            </section>           
         </ul>
     </header>
     <div id="form-div">
@@ -32,8 +40,8 @@
     </div>
     <main class="main">        
     </main>
+    
 </body>
-<script src="./main.js"></script>
 <script src="https://kit.fontawesome.com/407028fd30.js" crossorigin="anonymous"></script>
 
   

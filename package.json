@@ -1,0 +1,23 @@
+{
+  "name": "library",
+  "version": "1.0.0",
+  "description": "Preview on https://lumagabriela.github.io/Library/",
+  "main": "main.js",
+  "scripts": {
+    "build": "webpack --mode=development",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LumaGabriela/Library.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LumaGabriela/Library/issues"
+  },
+  "homepage": "https://github.com/LumaGabriela/Library#readme",
+  "dependencies": {
+    "firebase": "^9.6.2"
+  }
+}

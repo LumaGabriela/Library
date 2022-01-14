@@ -39,7 +39,7 @@ let h4 = []
 let p = []
 let checkboxes = []
 let checklabels = []
-function addBookCard(){
+async function addBookCard(){console.log(library)
     for(let i=0; i< library.length; i++){
         if(!cards[i]){
             //Create the book cards
@@ -73,23 +73,23 @@ function addBookCard(){
             cards[i].appendChild(checklabels[i])
             //Change the check status of the checkbox
             checkboxes[i].checked = library[i].read
-            checkboxes[i].addEventListener('change', ()=> {
+            checkboxes[i].addEventListener('change', async ()=> {
                 library[i].read = checkboxes[i].checked
-                populateStorage()
+                await updateLibraryDB()
             })
         }
     }
     delete_btn()
 }
 //       //      //      //
-function delete_btn(){
+async function delete_btn(){
     remove_btn.forEach((btn,i)=>{
-            btn.onclick = ()=>{
+            btn.onclick = async ()=>{
             btn.parentNode.remove()
             library.splice(i,1)
             cards.splice(i,1)
             remove_btn.splice(i,1)
-            populateStorage()
+            await updateLibraryDB()
         }
     })
 }
@@ -128,11 +128,10 @@ function addBookToLibrary(){
             library.push(new Book(fname, fauthor, fpages, fread, findex))
             form.style.animation = 'closemenu .5s ease-out forwards'
             formDiv.style.animation = 'formDivClose .5s ease-out forwards'
-        }
-        
+        }   
     }
-    populateStorage()
     addBookCard()
+    updateLibraryDB()
 }
 //      //   Validate fields   //      //
 function validate(field,regex){
@@ -147,34 +146,96 @@ function validate(field,regex){
 
 inputs.forEach((input)=>{
     input.addEventListener('keyup', (e) =>{
-        console.log(e.target.attributes.name.value);
         validate(e.target, pattern[e.target.name]);
     })
 })
-//      //  Setting the local storage    //      //
-Storage.prototype.setObj = function(key, obj) {
-    return this.setItem(key, JSON.stringify(obj))
+//
+const showUserInfo = (user) => {
+    logInBtn.classList.add('inactive')
+    logOutBtn.classList.remove('inactive')
+    userId.innerText = user.displayName
+    profilePicture.style.background = `url(${user.photoURL})`
+    userProfile.classList.remove('inactive')
 }
-Storage.prototype.getObj = function(key) {
-    return JSON.parse(this.getItem(key))
+const removeUserInfo = () => {
+    logInBtn.classList.remove('inactive')
+    logOutBtn.classList.add('inactive')
+    userProfile.classList.add('inactive')
 }
-//       //      //       //      
-if(!localStorage.getObj('library')) {
-    populateStorage();
-  } else {
-    setStorageValues();
+// config
+const firebaseConfig = {
+    apiKey: "AIzaSyDvAZjP4O4a3E724xY35klt9WlU3b7T1OA",
+    authDomain: "my-library-a4b37.firebaseapp.com",
+    databaseURL: "https://my-library-a4b37-default-rtdb.firebaseio.com",
+    projectId: "my-library-a4b37",
+    storageBucket: "my-library-a4b37.appspot.com",
+    messagingSenderId: "813409790518",
+    appId: "1:813409790518:web:37ddde16463a8c865fc697",
+    measurementId: "G-SD8NCMF36Y"
   }
+  
+firebase.initializeApp(firebaseConfig);
+//   Firebase auth   //      
+const auth = firebase.auth()
+const userId = document.getElementById('userId')
+const profilePicture = document.getElementById('profilePicture')
+const logInBtn = document.getElementById('login')
+const logOutBtn = document.getElementById('logout')
+const userProfile = document.getElementById('user-profile')
 
-function populateStorage(){
-    localStorage.setObj('library', library)
-    setStorageValues()
+auth.onAuthStateChanged(async (user) => {
+    if(user) {
+        showUserInfo(user) 
+        setupRealTimeListener()
+        await updateLibraryDB()
+        addBookCard()
+    }   
+    else {
+        removeUserInfo()
+    }
+})
+
+const signIn = () => {
+    const provider = new firebase.auth.GoogleAuthProvider()
+    auth.signInWithPopup(provider)
 }
 
-function setStorageValues() {
-    var currentLibrary = localStorage.getObj('library');
-    library = currentLibrary  
-    addBookCard()  
+const signOut = () => {auth.signOut()}
+
+logInBtn.onclick = signIn
+logOutBtn.onclick = signOut
+
+//        //    Firestore    //       //
+const db = firebase.firestore()
+let unsubscribe 
+
+const setupRealTimeListener = () => {
+    unsubscribe = db
+    .collection('Library')
+    .where('ownerId', '==', auth.currentUser.uid)
+    .orderBy('createdAt')    
+}
+
+const updateLibraryDB =  async () => {
+    try{
+
+        if ( await auth.currentUser) {
+            const oldLib =  await db
+            const currentDoc = oldLib.collection("Library").doc(auth.currentUser.uid)
+            const snapshot = await oldLib.collection("Library").get()  
+            const booklist = snapshot.docs.find((doc) => doc.id === auth.currentUser.uid )    
+            
+            if(library.length === 0 && booklist) {library = JSON.parse(JSON.stringify(booklist.data().BookList)) }
+            // console.log([booklist.data().BookList, library])
+
+            const pureLibrary = library.map(obj => Object.assign({}, obj))
+            await currentDoc.set({BookList: pureLibrary})
+            console.log(currentDoc)
+            
+        }
+    } catch(e) {console.log(e)}
+     
 }
 
 
-//      //      //      //
+//       //      //       //      
