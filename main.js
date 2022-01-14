@@ -93,12 +93,10 @@ async function delete_btn(){
         }
     })
 }
-clearAll.addEventListener('mouseup',clearLocalData)
-function clearLocalData(){
-    localStorage.clear()
-    while(main.childElementCount!= 0){
-        main.lastChild.remove()
-    }
+clearAll.addEventListener('mouseup',clearData)
+function clearData(){
+    library = []
+    updateLibraryDB()
 }
 //      //   Show the add book menu   //      //
 showMenu.addEventListener('mouseup', Menu)
